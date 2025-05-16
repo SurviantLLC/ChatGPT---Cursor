@@ -24,10 +24,9 @@ export default function RatingInput({ value, onChange }: RatingInputProps) {
   };
   
   return (
-    <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+    <div className="flex items-center justify-between rounded-md bg-gray-50 py-1 px-2">
       <div className="flex">
-        {[...Array(10)].map((_, i) => {
-          const ratingValue = i + 1;
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((ratingValue) => {
           const isActive = (hoverRating || value || 0) >= ratingValue;
           
           return (
@@ -37,19 +36,19 @@ export default function RatingInput({ value, onChange }: RatingInputProps) {
               onClick={() => handleRatingClick(ratingValue)}
               onMouseEnter={() => handleRatingHover(ratingValue)}
               onMouseLeave={handleRatingHoverEnd}
-              className={`cursor-pointer p-1 focus:outline-none`}
+              className="cursor-pointer p-0.5 focus:outline-none"
+              aria-label={`Rate ${ratingValue} of 10`}
             >
               <FaStar 
-                className={`text-lg ${
-                  isActive ? 'text-yellow-500' : 'text-gray-300'
-                }`}
+                size={12}
+                className={isActive ? 'text-yellow-500' : 'text-gray-300'}
               />
             </button>
           );
         })}
       </div>
       
-      <div className="text-lg font-bold ml-4 min-w-[30px] text-center">
+      <div className="text-sm font-medium ml-2 min-w-[20px] text-center">
         {value || hoverRating || '-'}
       </div>
     </div>

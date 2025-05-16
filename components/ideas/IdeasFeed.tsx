@@ -178,7 +178,7 @@ export default function IdeasFeed({ ideas, isLoading, onInteraction }: IdeasFeed
   };
 
   return (
-    <div className="relative min-h-[500px] w-full max-w-sm mx-auto">
+    <div className="relative min-h-[400px] w-full max-w-xs mx-auto">
       <AnimatePresence>
         {/* Swipe buttons */}
         <div className="absolute bottom-4 left-0 right-0 z-10 flex justify-center space-x-8 px-4">
@@ -229,82 +229,74 @@ export default function IdeasFeed({ ideas, isLoading, onInteraction }: IdeasFeed
                 }}
               >
                 {idea.image_path ? (
-                  <div className="h-32 relative bg-gray-100 overflow-hidden">
+                  <div className="h-20 relative bg-gray-100 overflow-hidden">
                     <Image
                       src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/ideas/${idea.image_path}`}
                       alt={idea.title}
                       fill
-                      sizes="(max-width: 768px) 100vw, 400px"
+                      sizes="(max-width: 768px) 100vw, 320px"
                       priority={index === currentIndex}
                       style={{ objectFit: 'cover' }}
-                      className="rounded-t-xl transition-transform hover:scale-105 duration-500"
+                      className="rounded-t-xl"
                     />
                   </div>
                 ) : (
-                  <div className="h-32 bg-gradient-to-r from-primary-100 to-secondary-100 rounded-t-xl flex items-center justify-center">
-                    <FaLightbulb className="text-primary-400 h-12 w-12 opacity-75" />
+                  <div className="h-20 bg-gradient-to-r from-primary-100 to-secondary-100 rounded-t-xl flex items-center justify-center">
+                    <FaLightbulb className="text-primary-400 h-8 w-8 opacity-75" />
                   </div>
                 )}
                 
-                <div className="p-6 flex-1 flex flex-col bg-white rounded-b-xl">
-                  <div className="flex justify-between items-start mb-2">
-                    <h2 className="text-xl font-bold text-gray-800">{idea.title}</h2>
+                <div className="p-3 flex-1 flex flex-col bg-white rounded-b-xl">
+                  <div className="flex justify-between items-start mb-1">
+                    <h2 className="text-base font-bold text-gray-800 leading-tight">{idea.title}</h2>
                     
-                    <div className="flex items-center text-sm text-gray-500">
-                      <FaCalendarAlt className="mr-1" size={12} />
-                      <span>{formatDate(idea.created_at)}</span>
+                    <div className="flex items-center text-xs text-gray-500">
+                      <FaCalendarAlt className="mr-1" size={10} />
+                      <span>{formatDate(idea.created_at).split(',')[0]}</span>
                     </div>
                   </div>
                   
-                  <p className="text-gray-600 mb-4 flex-1 leading-relaxed text-sm">
-                    {idea.description.length > 120
-                      ? `${idea.description.substring(0, 120)}...`
+                  <p className="text-gray-600 mb-2 flex-1 leading-tight text-xs">
+                    {idea.description.length > 80
+                      ? `${idea.description.substring(0, 80)}...`
                       : idea.description}
                   </p>
                   
                   {idea.tags && idea.tags.length > 0 && (
-                    <div className="mb-3">
-                      <div className="flex items-center mb-1">
-                        <FaTags className="text-gray-500 mr-1" size={12} />
-                        <span className="text-xs font-medium text-gray-700">Categories</span>
-                      </div>
+                    <div className="mb-2">
                       <div className="flex flex-wrap gap-1">
-                        {idea.tags.slice(0, 3).map(tag => (
+                        {idea.tags.slice(0, 2).map(tag => (
                           <span 
                             key={tag} 
-                            className="bg-primary-50 px-2 py-0.5 rounded-full text-xs font-medium text-primary-700 hover:bg-primary-100 transition-colors"
+                            className="bg-primary-50 px-1.5 py-0.5 rounded-full text-[10px] font-medium text-primary-700"
                           >
                             {tag}
                           </span>
                         ))}
-                        {idea.tags.length > 3 && (
-                          <span className="text-xs text-gray-500">+{idea.tags.length - 3} more</span>
+                        {idea.tags.length > 2 && (
+                          <span className="text-[10px] text-gray-500">+{idea.tags.length - 2}</span>
                         )}
                       </div>
                     </div>
                   )}
                   
-                  <div className="mt-auto">
-                    <div className="flex justify-between mb-3 rounded-lg bg-gray-50 p-2">
-                      <div className="flex flex-col items-center">
-                        <div className="text-red-500">
-                          <FaThumbsDown size={14} />
-                        </div>
-                        <span className="text-xs text-gray-500">Swipe left</span>
+                  <div className="mt-1">
+                    <div className="flex justify-between mb-2 rounded-md bg-gray-50 py-1 px-2">
+                      <div className="flex items-center space-x-1">
+                        <FaThumbsDown size={10} className="text-red-500" />
+                        <span className="text-[10px] text-gray-500">No</span>
                       </div>
                       
-                      <div className="flex flex-col items-center">
-                        <div className="text-green-500">
-                          <FaThumbsUp size={14} />
-                        </div>
-                        <span className="text-xs text-gray-500">Swipe right</span>
+                      <div className="flex items-center space-x-1">
+                        <span className="text-[10px] text-gray-500">Yes</span>
+                        <FaThumbsUp size={10} className="text-green-500" />
                       </div>
                     </div>
                     
-                    <div className="border-t border-gray-100 pt-2">
-                      <div className="flex items-center mb-2">
-                        <FaStar className="text-yellow-500 mr-1" size={12} />
-                        <span className="text-xs font-medium text-gray-700">Rate (1-10):</span>
+                    <div className="border-t border-gray-100 pt-1">
+                      <div className="flex items-center mb-0.5">
+                        <FaStar className="text-yellow-500 mr-1" size={10} />
+                        <span className="text-[10px] font-medium text-gray-700">Rating:</span>
                       </div>
                       
                       <RatingInput value={rating} onChange={handleRatingChange} />
