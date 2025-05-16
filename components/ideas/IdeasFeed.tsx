@@ -178,7 +178,7 @@ export default function IdeasFeed({ ideas, isLoading, onInteraction }: IdeasFeed
   };
 
   return (
-    <div className="relative min-h-[600px] w-full max-w-md mx-auto">
+    <div className="relative min-h-[500px] w-full max-w-sm mx-auto">
       <AnimatePresence>
         {/* Swipe buttons */}
         <div className="absolute bottom-4 left-0 right-0 z-10 flex justify-center space-x-8 px-4">
@@ -229,7 +229,7 @@ export default function IdeasFeed({ ideas, isLoading, onInteraction }: IdeasFeed
                 }}
               >
                 {idea.image_path ? (
-                  <div className="h-48 relative bg-gray-100 overflow-hidden">
+                  <div className="h-32 relative bg-gray-100 overflow-hidden">
                     <Image
                       src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/ideas/${idea.image_path}`}
                       alt={idea.title}
@@ -241,8 +241,8 @@ export default function IdeasFeed({ ideas, isLoading, onInteraction }: IdeasFeed
                     />
                   </div>
                 ) : (
-                  <div className="h-48 bg-gradient-to-r from-primary-100 to-secondary-100 rounded-t-xl flex items-center justify-center">
-                    <FaLightbulb className="text-primary-400 h-16 w-16 opacity-75" />
+                  <div className="h-32 bg-gradient-to-r from-primary-100 to-secondary-100 rounded-t-xl flex items-center justify-center">
+                    <FaLightbulb className="text-primary-400 h-12 w-12 opacity-75" />
                   </div>
                 )}
                 
@@ -256,52 +256,55 @@ export default function IdeasFeed({ ideas, isLoading, onInteraction }: IdeasFeed
                     </div>
                   </div>
                   
-                  <p className="text-gray-600 mb-4 flex-1 leading-relaxed">
-                    {idea.description.length > 180
-                      ? `${idea.description.substring(0, 180)}...`
+                  <p className="text-gray-600 mb-4 flex-1 leading-relaxed text-sm">
+                    {idea.description.length > 120
+                      ? `${idea.description.substring(0, 120)}...`
                       : idea.description}
                   </p>
                   
                   {idea.tags && idea.tags.length > 0 && (
-                    <div className="mb-5">
-                      <div className="flex items-center mb-2">
-                        <FaTags className="text-gray-500 mr-2" size={14} />
-                        <span className="text-sm font-medium text-gray-700">Categories</span>
+                    <div className="mb-3">
+                      <div className="flex items-center mb-1">
+                        <FaTags className="text-gray-500 mr-1" size={12} />
+                        <span className="text-xs font-medium text-gray-700">Categories</span>
                       </div>
-                      <div className="flex flex-wrap gap-2">
-                        {idea.tags.map(tag => (
+                      <div className="flex flex-wrap gap-1">
+                        {idea.tags.slice(0, 3).map(tag => (
                           <span 
                             key={tag} 
-                            className="bg-primary-50 px-3 py-1 rounded-full text-xs font-medium text-primary-700 hover:bg-primary-100 transition-colors"
+                            className="bg-primary-50 px-2 py-0.5 rounded-full text-xs font-medium text-primary-700 hover:bg-primary-100 transition-colors"
                           >
                             {tag}
                           </span>
                         ))}
+                        {idea.tags.length > 3 && (
+                          <span className="text-xs text-gray-500">+{idea.tags.length - 3} more</span>
+                        )}
                       </div>
                     </div>
                   )}
                   
                   <div className="mt-auto">
-                    <div className="flex justify-between mb-5 rounded-lg bg-gray-50 p-3">
+                    <div className="flex justify-between mb-3 rounded-lg bg-gray-50 p-2">
                       <div className="flex flex-col items-center">
-                        <div className="text-red-500 mb-1">
-                          <FaThumbsDown size={18} />
+                        <div className="text-red-500">
+                          <FaThumbsDown size={14} />
                         </div>
                         <span className="text-xs text-gray-500">Swipe left</span>
                       </div>
                       
                       <div className="flex flex-col items-center">
-                        <div className="text-green-500 mb-1">
-                          <FaThumbsUp size={18} />
+                        <div className="text-green-500">
+                          <FaThumbsUp size={14} />
                         </div>
                         <span className="text-xs text-gray-500">Swipe right</span>
                       </div>
                     </div>
                     
-                    <div className="border-t border-gray-100 pt-4">
-                      <div className="flex items-center mb-3">
-                        <FaStar className="text-yellow-500 mr-2" />
-                        <span className="text-sm font-medium text-gray-700">Rate this idea (1-10):</span>
+                    <div className="border-t border-gray-100 pt-2">
+                      <div className="flex items-center mb-2">
+                        <FaStar className="text-yellow-500 mr-1" size={12} />
+                        <span className="text-xs font-medium text-gray-700">Rate (1-10):</span>
                       </div>
                       
                       <RatingInput value={rating} onChange={handleRatingChange} />
