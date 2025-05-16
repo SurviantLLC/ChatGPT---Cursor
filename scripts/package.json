@@ -1,0 +1,10 @@
+{
+  "name": "startup-idea-hub-scripts",
+  "version": "1.0.0",
+  "description": "Utility scripts for Startup Idea Hub",
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.4",
+    "dotenv": "^16.3.1"
+  }
+}
